@@ -10,12 +10,18 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 firebase.initializeApp({
-  // your config
+  apiKey: "AIzaSyAYrSDb2xtOGJ7wObgCL_WRmET7AXDyyJQ",
+  authDomain: "chat-72894.firebaseapp.com",
+  projectId: "chat-72894",
+  storageBucket: "chat-72894.appspot.com",
+  messagingSenderId: "554060193215",
+  appId: "1:554060193215:web:9177211641d65bd2d4950a",
+  measurementId: "G-3PWELR7FV0"
 })
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-const analytics = firebase.analytics();
+// const analytics = firebase.analytics();
 
 
 function App() {
@@ -25,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>⚛️🔥💬</h1>
+        <h1>React Chat App</h1>
         <SignOut />
       </header>
 
@@ -46,8 +52,7 @@ function SignIn() {
 
   return (
     <>
-      <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
-      <p>Do not violate the community guidelines or you will be banned for life!</p>
+      <button style={{'color':'#0191fc'}} className="sign-in" onClick={signInWithGoogle}>Sign in with <i class="fa-brands fa-google"></i></button>
     </>
   )
 
@@ -55,10 +60,9 @@ function SignIn() {
 
 function SignOut() {
   return auth.currentUser && (
-    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+    <button className="sign-out" onClick={() => auth.signOut()}>Log out</button>
   )
 }
-
 
 function ChatRoom() {
   const dummy = useRef();
@@ -69,11 +73,12 @@ function ChatRoom() {
 
   const [formValue, setFormValue] = useState('');
 
-
   const sendMessage = async (e) => {
     e.preventDefault();
 
     const { uid, photoURL } = auth.currentUser;
+
+    console.log('running')
 
     await messagesRef.add({
       text: formValue,
@@ -99,7 +104,7 @@ function ChatRoom() {
 
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
-      <button type="submit" disabled={!formValue}>🕊️</button>
+      <button type="submit" disabled={!formValue}><i class="fa-solid fa-paper-plane"></i></button>
 
     </form>
   </>)
@@ -113,7 +118,7 @@ function ChatMessage(props) {
 
   return (<>
     <div className={`message ${messageClass}`}>
-      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
+      <img alt="react chat app" src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
       <p>{text}</p>
     </div>
   </>)
