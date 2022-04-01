@@ -1,1 +1,1 @@
-# React Chat App (Simple)
+# React Chat App
